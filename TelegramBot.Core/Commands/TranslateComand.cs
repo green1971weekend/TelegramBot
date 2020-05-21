@@ -79,11 +79,11 @@ namespace TelegramBot.Core.Commands
                 {
                     picture = pictureModel.urls.full;
                     await client.SendPhotoAsync(chatId, new InputOnlineFile(picture));
-                    await client.SendTextMessageAsync(chatId, "Подобрал для тебя самое лучшее из интернета:)");
+                    await client.SendTextMessageAsync(chatId, "Подобрал для тебя лучшее из интернета! Надеюсь тебе понравился результат, попробуй снова:)");
                 }
                 else
                 {
-                    throw new ArgumentException("К сожалению не могу найти для тебя подходящую иллюстрацию для этого слова... Попробуй что-нибудь еще.");
+                    throw new Exception("К сожалению не могу найти для тебя подходящую иллюстрацию для этого слова... Попробуй что-нибудь еще.");
                 }
             }
             catch (Exception ex)
