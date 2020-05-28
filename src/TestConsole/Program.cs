@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TelegramBot.Core.Models;
 using TelegramBot.Core.Services;
@@ -7,38 +8,32 @@ namespace TestConsole
 {
     class Program
     {
-        static async Task Main()
-        {
-            var synonyms = string.Empty;
-            var handler = new HttpHandler();
-            Console.Write("Вводим слово: ");
-            string word = Console.ReadLine();
+        //static async Task Main()
+        //{
+            //var synonyms = string.Empty;
+            //var handler = new HttpHandler();
+            //Console.Write("Вводим слово: ");
+            //string word = Console.ReadLine();
 
-            try
-            {
-                //var httpClient = new HttpClient();
-                //var response = await httpClient.GetAsync("");
-                //var content = await response.Content.ReadAsStringAsync();
-                //response.EnsureSuccessStatusCode();
-                //var searchObjects = JsonConvert.DeserializeObject<RootObject>(content);
-                //{
-                //}
+            //try
+            //{
+            //    var wordModel = await handler.GetWordModelAsync(word);
+            //    var definition = wordModel[0].Defs[0].Remove(0, 2);
+            //    synonyms += $"Определение к слову {wordModel[0].Word}: {definition}. Синонимы: " ;
 
-                var wordModel = await handler.GetWordModelAsync(word);
+            //    foreach (WordModel wordsss in wordModel.Skip(1))
+            //    {
+            //        wordsss.Word.Skip(1);
+            //        synonyms += wordsss.Word + "; ";
+            //    }
+            //    Console.WriteLine(synonyms);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Some error,message - {ex.Message}, and track {ex.StackTrace}");
+            //}
 
-                foreach (Word synonym in wordModel.Words)
-                {
-                    synonyms += synonym.word + " ";
-                }
-
-                Console.WriteLine(synonyms);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Some error,message - {ex.Message}, and track {ex.StackTrace}");
-            }
-
-            Console.ReadLine();
-        }
+            //Console.ReadLine();
+        //}
     }
 }

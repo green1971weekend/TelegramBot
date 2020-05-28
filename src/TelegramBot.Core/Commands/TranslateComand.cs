@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -38,24 +39,18 @@ namespace TelegramBot.Core.Commands
             var handler = new HttpHandler();
             var chatId = message.Chat.Id;
 
-            var hasError = false;
             var userInput = string.Empty;
             var translatedText = string.Empty;
-            var picture = string.Empty;
-            var synonyms = string.Empty; 
+            var picture = string.Empty; 
 
             try
             {
                 string[] words = message.Text.Split(' ');
                 if (words.Length != 2)
                 {
-                    hasError = true;
-                }
-                userInput = words[1];
-                if (hasError)
-                {
                     throw new ArgumentException("Неккоректный ввод.. После команды /translate может быть только одно слово. Пример использования: /translate [WORD]");
                 }
+                userInput = words[1];
 
                 // Yandex
                 var translateYandexResponse = await handler.GetYandexTranslateResponseAsync(userInput, _api.YandexAPI);
@@ -65,21 +60,26 @@ namespace TelegramBot.Core.Commands
                     translatedText = string.Concat(translatedWord);
                 }
                 await client.SendTextMessageAsync(chatId, translatedText);
+                translatedText = "";
 
                 //Word
-                //var wordModel = await handler.GetWordModelAsync(word);
-                //foreach(Word synonym in wordModel.Words)
-                //{
-                //    synonyms += synonym.word + " ";
-                //}
+                var wordModel = await handler.GetWordModelAsync(userInput);
+                var definition = wordModel[0].Defs[0].Remove(0, 2);
+                translatedText += $"Определение к слову {wordModel[0].Word}: {definition}. Синонимы: ";
+
+                foreach (WordModel word in wordModel.Skip(1))
+                {
+                    translatedText += word.Word + "; ";
+                }
+                await client.SendTextMessageAsync(chatId, translatedText);
 
                 // Image
                 var pictureModel = await handler.GetImageModelAsync(userInput, _api.UnsplashAPI);
                 if (pictureModel != null)
                 {
-                    picture = pictureModel.urls.full;
+                    picture = pictureModel.urls.regular;
                     await client.SendPhotoAsync(chatId, new InputOnlineFile(picture));
-                    await client.SendTextMessageAsync(chatId, "Подобрал для тебя лучшее из интернета! Надеюсь тебе понравился результат, попробуй снова:)");
+                    await client.SendTextMessageAsync(chatId, "Подобрал для тебя то, что удалось найти! Надеюсь тебе понравился результат, попробуй снова:)");
                 }
                 else
                 {

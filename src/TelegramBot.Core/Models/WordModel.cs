@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TelegramBot.Core.Models
 {
@@ -7,18 +8,10 @@ namespace TelegramBot.Core.Models
     /// </summary>
     public class WordModel
     {
-        public Word[] Words { get; set; }
-    }
-
-    /// <summary>
-    /// Specific word.
-    /// </summary>
-    public class Word
-    {
-        public string word { get; set; }
-        public int score { get; set; }
-        public string[] tags { get; set; }
-        public string[] defs { get; set; }
+        public string Word { get; set; }
+        public int Score { get; set; }
+        public string[] Tags { get; set; }
+        public string[] Defs { get; set; }
     }
 
 }

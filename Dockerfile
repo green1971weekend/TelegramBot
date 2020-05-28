@@ -3,11 +3,11 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["TelegramBot/TelegramBot.csproj", "TelegramBot/"]
-COPY ["TelegramBot.Core/TelegramBot.Core.csproj", "TelegramBot.Core/"]
-RUN dotnet restore "TelegramBot/TelegramBot.csproj"
+COPY ["src/TelegramBot/TelegramBot.csproj", "src/TelegramBot/"]
+COPY ["src/TelegramBot.Core/TelegramBot.Core.csproj", "src/TelegramBot.Core/"]
+RUN dotnet restore "src/TelegramBot/TelegramBot.csproj"
 COPY . .
-WORKDIR "/src/TelegramBot"
+WORKDIR "/src/src/TelegramBot"
 RUN dotnet build "TelegramBot.csproj" -c Release -o /app/build
 
 FROM build AS publish

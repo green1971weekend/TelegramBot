@@ -1,6 +1,7 @@
 ﻿using Flurl;
 using Flurl.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TelegramBot.Core.Models;
 
@@ -54,13 +55,13 @@ namespace TelegramBot.Core.Services
         /// </summary>
         /// <param name="userInput">User text input.</param>
         /// <returns>JSON model.</returns>
-        public async Task<WordModel> GetWordModelAsync(string userInput)
+        public async Task<List<WordModel>> GetWordModelAsync(string userInput)
         {
             var response = await "https://api.datamuse.com/"
                 .AppendPathSegment("words")
-                .SetQueryParams(new { ml = userInput, qe = "ml", max = "1", md = "d" })
+                .SetQueryParams(new { ml = userInput, qe = "ml", max = "7", md = "d" })
                 .GetAsync()
-                .ReceiveJson<WordModel>();
+                .ReceiveJson<List<WordModel>>();
             return response;
         }
     }
