@@ -1,6 +1,7 @@
 # EnglishHelper [Telegram Bot]
 
 The main idea of this project is to implement a web functionality wich serve as the valuble help for studing English language with telegram bot help.
+For using the current bot you should [follow this link](https://t.me/instance1_bot)
 
 # Getting Started
 
